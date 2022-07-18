@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+    ispy:
+        container_name: ispy
+        image: doitandbedone/ispyagentdvr:4.1.0.0
+        restart: always
+        network_mode: "bridge"
+        privileged: false
+        shm_size: "8gb"
+#        command: /bin/bash -c "tail -f /dev/null"
+        environment:
+            - TZ=Europe/Moscow
+        ports:
+            - "8090:8090"
+            - "3478:3478/udp"
+            - "50000-50010:50000-50010/udp"
+        volumes:
+            - ./config/:/agent/Media/XML/:rw
+            - ./media/:/agent/Media/WebServerRoot/Media/:rw
+            - ./commands/:/agent/Commands/:rw
